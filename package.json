@@ -8,9 +8,16 @@
   },
   "icon": "assets/icon.png",
   "publisher": "Budi Haryono",
-  "version": "6.0.0",
+  "version": "7.0.0",
   "engines": {
     "vscode": "^1.60.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itcomindo/mywp-starter.git",
+    "directory": "./mywp-starter",
+    "branch": "main",
+    "tag": "Wordpress Theme Starter Kit"
   },
   "categories": ["Other"],
   "activationEvents": [

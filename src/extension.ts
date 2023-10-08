@@ -225,7 +225,7 @@ defined('ABSPATH') || exit;
 	text-transform: capitalize;
   }
 `;
-		const functionsContent = `<? php
+		const functionsContent = `<?php
 /**
  * Functions.php
  *
@@ -295,8 +295,7 @@ get_header();
 get_template_part('template-parts/single/page-template');
 get_footer();`;
 
-		const searchContent = `
-		<?php
+		const searchContent = `<?php
 /**
  * Search Template
  *
@@ -443,7 +442,7 @@ get_footer();`;
 		createFile(path.join(incDir, 'index.php'), indexContent);
 		createFile(path.join(incDir, 'inc.php'), genericPHPContent('inc.php'));
 
-		const incSubDirs = ['fields', 'libs', 'components'];
+		const incSubDirs = ['fields', 'libs', 'components', 'plugins'];
 		incSubDirs.forEach(dir => {
 			const dirPath = path.join(incDir, dir);
 			fs.mkdirSync(dirPath);
@@ -455,6 +454,8 @@ get_footer();`;
 				createFile(path.join(dirPath, 'libs.php'), genericPHPContent('libs.php'));
 			} else if (dir === 'components') {
 				createFile(path.join(dirPath, 'components.php'), genericPHPContent('components.php'));
+			} else if (dir === 'plugins') {
+				createFile(path.join(dirPath, 'plugins.php'), genericPHPContent('plugins.php'));
 			}
 		});
 
