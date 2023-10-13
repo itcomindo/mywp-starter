@@ -3,20 +3,20 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 export function activate(context: vscode.ExtensionContext) {
-	let disposable = vscode.commands.registerCommand('extension.masmonsWPStarter', () => {
-		const rootPath = vscode.workspace.rootPath;
-		if (!rootPath) {
-			vscode.window.showErrorMessage('Harap buka workspace terlebih dahulu.');
-			return;
-		}
+  let disposable = vscode.commands.registerCommand('extension.masmonsWPStarter', () => {
+    const rootPath = vscode.workspace.rootPath;
+    if (!rootPath) {
+      vscode.window.showErrorMessage('Harap buka workspace terlebih dahulu.');
+      return;
+    }
 
-		// Fungsi untuk membuat file dengan konten tertentu
-		const createFile = (filePath: string, content: string) => {
-			fs.writeFileSync(filePath, content, 'utf8');
-		};
+    // Fungsi untuk membuat file dengan konten tertentu
+    const createFile = (filePath: string, content: string) => {
+      fs.writeFileSync(filePath, content, 'utf8');
+    };
 
-		// Template konten file
-		const indexContent = `<?php
+    // Template konten file
+    const indexContent = `<?php
 /**
  * Silence is golden
  *
@@ -27,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
 defined('ABSPATH') || exit;
 `;
 
-		const genericPHPContent = (filename: string) => `<?php
+    const genericPHPContent = (filename: string) => `<?php
 /**
  * File ${filename}
  *
@@ -38,7 +38,7 @@ defined('ABSPATH') || exit;
 defined('ABSPATH') || exit;
 `;
 
-		const styleContent = `/**
+    const styleContent = `/**
 =========================
 * Theme Name: Unamed Theme
 * Theme URI: https://budiharyono.com/
@@ -266,7 +266,7 @@ h6 {
 }
 
 `;
-		const functionsContent = `<?php
+    const functionsContent = `<?php
 /**
  * Functions.php
  *
@@ -315,7 +315,7 @@ require_once get_template_directory(). '/inc/inc.php';
 require get_template_directory(). '/assets/assets.php';
 `;
 
-		const singleContent = `<?php
+    const singleContent = `<?php
 /**
  * Single Template
  *
@@ -328,7 +328,7 @@ get_header();
 get_template_part('template-parts/single/single-template');
 get_footer();`;
 
-		const pageContent = `<?php
+    const pageContent = `<?php
 /**
  * Page Template
  *
@@ -341,7 +341,7 @@ get_header();
 get_template_part('template-parts/single/page-template');
 get_footer();`;
 
-		const searchContent = `<?php
+    const searchContent = `<?php
 /**
  * Search Template
  *
@@ -354,7 +354,7 @@ get_header();
 get_template_part('template-parts/single/search-template');
 get_footer();`;
 
-		const footerContent = `<?php
+    const footerContent = `<?php
 /**
  * Footer
  *
@@ -370,7 +370,7 @@ wp_footer();
 
 </html>`;
 
-		const headerContent = `<?php
+    const headerContent = `<?php
 /**
  * Header
  *
@@ -399,7 +399,7 @@ defined('ABSPATH') || exit;
 	get_template_part('template-parts/header/header-template');
 `;
 
-		const archiveContent = `<?php
+    const archiveContent = `<?php
 /**
  * Archive.php
  *
@@ -413,7 +413,7 @@ get_header();
 get_template_part('template-parts/archives/archives-template');
 get_footer();`;
 
-		const page404Content = `<?php
+    const page404Content = `<?php
 /**
  * 404.php
  *
@@ -427,7 +427,7 @@ get_header();
 get_template_part('template-parts/archives/archives-template');
 get_footer();`;
 
-		const frontPageContent = `<?php
+    const frontPageContent = `<?php
 /**
  * Frontpage
  *
@@ -441,7 +441,7 @@ get_header();
 get_template_part('template-parts/single/front-page-template');
 get_footer();`;
 
-		const homeContent = `<?php
+    const homeContent = `<?php
 /**
  * Home
  *
@@ -455,7 +455,7 @@ get_header();
 get_template_part('template-parts/single/front-page-template');
 get_footer();`;
 
-		const themeOptionsContent = `<?php
+    const themeOptionsContent = `<?php
 
 /**
  * File theme-options.php
@@ -487,130 +487,336 @@ function mm_theme_options()
 add_action('carbon_fields_register_fields', 'mm_theme_options');
 `;
 
-		// Membuat direktori dan file utama
-		const mainFiles = ['index.php', 'functions.php', 'home.php', 'front-page.php', 'style.css', 'style.min.css', '404.php', 'archive.php', 'comments.php', 'page.php', 'single.php', 'header.php', 'footer.php', 'search.php', 'screenshot.png'];
-		mainFiles.forEach(file => {
-			if (file.endsWith('.php')) {
-				if (file === 'index.php') {
-					createFile(path.join(rootPath, file), indexContent);
-				} else if (file === 'functions.php') {
-					createFile(path.join(rootPath, file), functionsContent);
-				} else if (file === 'single.php') {
-					createFile(path.join(rootPath, file), singleContent);
-				} else if (file === 'page.php') {
-					createFile(path.join(rootPath, file), pageContent);
-				} else if (file === 'search.php') {
-					createFile(path.join(rootPath, file), searchContent);
-				} else if (file === 'footer.php') {
-					createFile(path.join(rootPath, file), footerContent);
-				} else if (file === 'header.php') {
-					createFile(path.join(rootPath, file), headerContent);
-				} else if (file === 'archive.php') {
-					createFile(path.join(rootPath, file), archiveContent);
-				} else if (file === '404.php') {
-					createFile(path.join(rootPath, file), page404Content);
-				} else if (file === 'front-page.php') {
-					createFile(path.join(rootPath, file), frontPageContent);
-				} else if (file === 'home.php') {
-					createFile(path.join(rootPath, file), homeContent);
-				} else {
-					createFile(path.join(rootPath, file), genericPHPContent(file));
-				}
-			} else if (file.endsWith('.css')) {
-				createFile(path.join(rootPath, file), styleContent);
-			} else {
-				fs.writeFileSync(path.join(rootPath, file), '', 'utf8');
-			}
-		});
+    const menusContent = `<?php
+/**
+ * File menus.php
+ *
+ * @package MasmonsTheme
+ * @author Budi Haryono <mail.budiharyono@gmail.com>
+ * @since 1.0.0
+ */
+defined('ABSPATH') || exit;
+/**
+ * Function mm_register_menus
+ *
+ * Description: Header Menu, Category Menu, Footer Menu
+ *
+ * @package MasmonsTheme
+ * @author Budi Haryono <mail.budiharyono@gmail.com>
+ * @since 019
+ */
+function mm_register_menus()
+{
+    register_nav_menus([
+        'header-menu' => 'Header Menu',
+        'category-menu' => 'Category Menu',
+        'footer-menu' => 'Footer Menu'
+    ]);
+}
+add_action('after_setup_theme', 'mm_register_menus');
+add_action('after_setup_theme', 'mm_register_menus');
+/**
+ * Function mm_show_header_menu
+ *
+ * @package MasmonsTheme
+ * @author Budi Haryono <mail.budiharyono@gmail.com>
+ * @since 019
+ */
+function mm_show_header_menu()
+{
+    wp_nav_menu([
+        'theme_location' => 'header-menu',
+        'container' => 'nav',
+        'container_id' => 'header-menu',
+        'container_class' => 'header-menu',
+        'menu_id' => 'header-menu-item-wr',
+        'menu_class' => 'horizontal-menu',
+    ]);
+}
+/**
+ * Function mm_show_category_menu
+ *
+ * @package MasmonsTheme
+ * @author Budi Haryono <mail.budiharyono@gmail.com>
+ * @since 019
+ */
+function mm_show_category_menu()
+{
+    wp_nav_menu([
+        'theme_location' => 'category-menu',
+        'container' => 'nav',
+        'container_id' => 'category-menu',
+        'container_class' => 'category-menu',
+        'menu_id' => 'category-menu-item-wr',
+        'menu_class' => 'horizontal-menu',
+    ]);
+}
+/**
+ * Function mm_show_footer_menu
+ *
+ * @package MasmonsTheme
+ * @author Budi Haryono <mail.budiharyono@gmail.com>
+ * @since 019
+ */
+function mm_show_footer_menu()
+{
+    wp_nav_menu([
+        'theme_location' => 'footer-menu',
+        'container' => 'nav',
+        'container_id' => 'footer-menu',
+        'container_class' => 'footer-menu',
+        'menu_id' => 'footer-menu-item-wr',
+        'menu_class' => 'vertical-menu',
+    ]);
+}
+`;
+    const assetsContent = `<?php
+/**
+ * File assets.php
+ *
+ * @package MasmonsTheme
+ * @author Budi Haryono <mail.budiharyono@gmail.com>
+ * @since 1.0.0
+ */
+defined('ABSPATH') || exit;
+/**
+ * Function mm_theme_version
+ *
+ * @package MasmonsTheme
+ * @author Budi Haryono <mail.budiharyono@gmail.com>
+ * @since 019
+ */
+function mm_theme_version()
+{
+    return wp_get_theme()->get('Version');
+}
 
-		// Membuat direktori assets dan sub-direktorinya
-		const assetsDir = path.join(rootPath, 'assets');
-		fs.mkdirSync(assetsDir);
-		createFile(path.join(assetsDir, 'assets.php'), genericPHPContent('assets.php'));
-		createFile(path.join(assetsDir, 'index.php'), indexContent);
-
-		const assetsSubDirs = ['css', 'js', 'images'];
-		assetsSubDirs.forEach(dir => {
-			const dirPath = path.join(assetsDir, dir);
-			fs.mkdirSync(dirPath);
-			createFile(path.join(dirPath, 'index.php'), indexContent);
-
-			if (dir === 'css') {
-				['front-page.css', 'front-page.min.css', 'single.css', 'single-min.css', 'page.css', 'page.min.css', 'archive.css', 'archive.min.css', '404.css', '404.min.css'].forEach(file => {
-					fs.writeFileSync(path.join(dirPath, file), '', 'utf8');
-				});
-			} else if (dir === 'js') {
-				createFile(path.join(dirPath, 'global.js'), '');
-			} else if (dir === 'images') {
-				createFile(path.join(dirPath, 'images.php'), genericPHPContent('images.php'));
-			}
-		});
-
-		// Membuat direktori inc dan sub-direktorinya
-		const incDir = path.join(rootPath, 'inc');
-		fs.mkdirSync(incDir);
-		createFile(path.join(incDir, 'index.php'), indexContent);
-		createFile(path.join(incDir, 'inc.php'), genericPHPContent('inc.php'));
-
-		const incSubDirs = ['fields', 'libs', 'components', 'plugins'];
-		incSubDirs.forEach(dir => {
-			const dirPath = path.join(incDir, dir);
-			fs.mkdirSync(dirPath);
-			createFile(path.join(dirPath, 'index.php'), indexContent);
-
-			if (dir === 'fields') {
-				createFile(path.join(dirPath, 'theme-options.php'), themeOptionsContent);
-			} else if (dir === 'fields') {
-				createFile(path.join(dirPath, 'fields.php'), genericPHPContent('fields.php'));
-			} else if (dir === 'libs') {
-				createFile(path.join(dirPath, 'libs.php'), genericPHPContent('libs.php'));
-			} else if (dir === 'components') {
-				createFile(path.join(dirPath, 'components.php'), genericPHPContent('components.php'));
-			} else if (dir === 'plugins') {
-				createFile(path.join(dirPath, 'plugins.php'), genericPHPContent('plugins.php'));
-			}
-		});
-
-
-		// Membuat direktori template-parts dan sub-direktorinya
-		const templatePartsDir = path.join(rootPath, 'template-parts');
-		fs.mkdirSync(templatePartsDir);
-		createFile(path.join(templatePartsDir, 'index.php'), indexContent);
-
-		const templatePartsSubDirs = ['header', 'sections', 'footer', 'menus', 'single', 'archives'];
-		templatePartsSubDirs.forEach(dir => {
-			const dirPath = path.join(templatePartsDir, dir);
-			fs.mkdirSync(dirPath);
-			createFile(path.join(dirPath, 'index.php'), indexContent);
-
-			if (dir === 'header') {
-				createFile(path.join(dirPath, 'header-template.php'), genericPHPContent('header-template.php'));
-			} else if (dir === 'sections') {
-				['about-sections.php', 'services-section.php', 'counter-section.php', 'testimonials-section.php', 'pricing-section.php', 'faq-section.php', 'cta-section.php'].forEach(file => {
-					createFile(path.join(dirPath, file), genericPHPContent(file));
-				});
-			} else if (dir === 'footer') {
-				createFile(path.join(dirPath, 'footer-template.php'), genericPHPContent('footer-template.php'));
-			} else if (dir === 'menus') {
-				createFile(path.join(dirPath, 'menus.php'), genericPHPContent('menus.php'));
-			} else if (dir === 'single') {
-				['single-template.php', 'page-template.php'].forEach(file => {
-					createFile(path.join(dirPath, file), genericPHPContent(file));
-				});
-			} else if (dir === 'archives') {
-				createFile(path.join(dirPath, 'archives-template.php'), genericPHPContent('archives-template.php'));
-			}
-		});
+/**
+ * Function mm_enqueue_styles
+ *
+ * @package MasmonsTheme
+ * @author Budi Haryono <mail.budiharyono@gmail.com>
+ * @since 019
+ */
+function mm_enqueue_styles()
+{
+    wp_enqueue_style('mm-normalize', 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css', array(), '8.0.1', 'all');
+    wp_enqueue_style('mm-fontawesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css', array(), '6.2.0', 'all');
+    wp_enqueue_style('mm-animate', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css', array(), '4.1.1', 'all');
+    if (mm_is_devmode()) {
+        wp_enqueue_style('mm-style', get_stylesheet_uri(), array(), mm_theme_version(), 'all');
+    } else {
+        wp_enqueue_style('mm-style', get_template_directory_uri() . '/style.min.css', array(), mm_theme_version(), 'all');
+    }
+    if (is_single() || is_page()) {
+        if (mm_is_devmode()) {
+            wp_enqueue_style('mm-page-style', get_template_directory_uri() . '/assets/css/single.css', array(), mm_theme_version(), 'all');
+        } else {
+            wp_enqueue_style('mm-page-style', get_template_directory_uri() . '/assets/css/single.min.css', array(), mm_theme_version(), 'all');
+        }
+    }
+    if (is_search()) {
+        if (mm_is_devmode()) {
+            wp_enqueue_style('mm-search-style', get_template_directory_uri() . '/assets/css/search.css', array(), mm_theme_version(), 'all');
+        } else {
+            wp_enqueue_style('mm-search-style', get_template_directory_uri() . '/assets/css/search.min.css', array(), mm_theme_version(), 'all');
+        }
+    }
+    if (is_tag() || is_category()) {
+        if (mm_is_devmode()) {
+            wp_enqueue_style('mm-archive-style', get_template_directory_uri() . '/assets/css/archive.css', array(), mm_theme_version(), 'all');
+        } else {
+            wp_enqueue_style('mm-archive-style', get_template_directory_uri() . '/assets/css/archive.min.css', array(), mm_theme_version(), 'all');
+        }
+    }
+    if (is_404()) {
+        if (mm_is_devmode()) {
+            wp_enqueue_style('mm-404-style', get_template_directory_uri() . '/assets/css/404.css', array(), mm_theme_version(), 'all');
+        } else {
+            wp_enqueue_style('mm-404-style', get_template_directory_uri() . '/assets/css/404.min.css', array(), mm_theme_version(), 'all');
+        }
+    }
+}
+add_action('wp_enqueue_scripts', 'mm_enqueue_styles');
 
 
+/**
+ * Function mm_load_scripts
+ *
+ * @package MasmonsTheme
+ * @since 019
+ */
+function mm_load_scripts()
+{
+    // dequeue jquery.
+    wp_deregister_script('jquery');
+    wp_enqueue_script('mm-jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js', array(), '3.7.0', true);
+    if (mm_is_devmode()) {
+        wp_enqueue_script('mm-global-js', get_template_directory_uri() . '/assets/js/global.js', array(), mm_theme_version(), true);
+    } else {
+        wp_enqueue_script('mm-global-js', get_template_directory_uri() . '/assets/js/global.min.js', array(), mm_theme_version(), true);
+    }
+}
+add_action('wp_enqueue_scripts', 'mm_load_scripts');
+
+`;
+
+    const templatePartsContent = `<?php
+/**
+ * Template Part
+ *
+ * @package MasmonsTheme
+ * @author Budi Haryono <mail.budiharyono@gmail.com>
+ * @since 019
+ */
+
+defined('ABSPATH') || exit;
+require_once get_template_directory() . '/template-parts/menus/menus.php';
+`;
+
+    const imagesContent = `<?php
+
+  /**
+   * File images.php
+   *
+   * @package MasmonsTheme
+   * @author Budi Haryono <mail.budiharyono@gmail.com>
+   * @since 1.0.0
+   */
+  defined('ABSPATH') || exit;
+
+  define('MM_IMAGE_DIR', get_template_directory_uri() . '/assets/images/');
+
+  `;
 
 
-		// create dir end above this line.
 
-		vscode.window.showInformationMessage('Struktur tema WP berhasil di-generate.');
-	});
+    // Membuat direktori dan file utama
+    const mainFiles = ['index.php', 'functions.php', 'home.php', 'front-page.php', 'style.css', 'style.min.css', '404.php', 'archive.php', 'comments.php', 'page.php', 'single.php', 'header.php', 'footer.php', 'search.php', 'screenshot.png'];
+    mainFiles.forEach(file => {
+      if (file.endsWith('.php')) {
+        if (file === 'index.php') {
+          createFile(path.join(rootPath, file), indexContent);
+        } else if (file === 'functions.php') {
+          createFile(path.join(rootPath, file), functionsContent);
+        } else if (file === 'single.php') {
+          createFile(path.join(rootPath, file), singleContent);
+        } else if (file === 'page.php') {
+          createFile(path.join(rootPath, file), pageContent);
+        } else if (file === 'search.php') {
+          createFile(path.join(rootPath, file), searchContent);
+        } else if (file === 'footer.php') {
+          createFile(path.join(rootPath, file), footerContent);
+        } else if (file === 'header.php') {
+          createFile(path.join(rootPath, file), headerContent);
+        } else if (file === 'archive.php') {
+          createFile(path.join(rootPath, file), archiveContent);
+        } else if (file === '404.php') {
+          createFile(path.join(rootPath, file), page404Content);
+        } else if (file === 'front-page.php') {
+          createFile(path.join(rootPath, file), frontPageContent);
+        } else if (file === 'home.php') {
+          createFile(path.join(rootPath, file), homeContent);
+        } else {
+          createFile(path.join(rootPath, file), genericPHPContent(file));
+        }
+      } else if (file.endsWith('.css')) {
+        createFile(path.join(rootPath, file), styleContent);
+      } else {
+        fs.writeFileSync(path.join(rootPath, file), '', 'utf8');
+      }
+    });
 
-	context.subscriptions.push(disposable);
+    // Membuat direktori assets dan sub-direktorinya
+    const assetsDir = path.join(rootPath, 'assets');
+    fs.mkdirSync(assetsDir);
+    // createFile(path.join(assetsDir, 'assets.php'), genericPHPContent('assets.php'));
+    createFile(path.join(assetsDir, 'assets.php'), assetsContent);
+    createFile(path.join(assetsDir, 'index.php'), indexContent);
+
+    const assetsSubDirs = ['css', 'js', 'images'];
+    assetsSubDirs.forEach(dir => {
+      const dirPath = path.join(assetsDir, dir);
+      fs.mkdirSync(dirPath);
+      createFile(path.join(dirPath, 'index.php'), indexContent);
+
+      if (dir === 'css') {
+        ['front-page.css', 'front-page.min.css', 'single.css', 'single-min.css', 'page.css', 'page.min.css', 'archive.css', 'archive.min.css', '404.css', '404.min.css'].forEach(file => {
+          fs.writeFileSync(path.join(dirPath, file), '', 'utf8');
+        });
+      } else if (dir === 'js') {
+        createFile(path.join(dirPath, 'global.js'), '');
+      } else if (dir === 'images') {
+        createFile(path.join(dirPath, 'images.php'), imagesContent);
+      }
+    });
+
+    // Membuat direktori inc dan sub-direktorinya
+    const incDir = path.join(rootPath, 'inc');
+    fs.mkdirSync(incDir);
+    createFile(path.join(incDir, 'index.php'), indexContent);
+    createFile(path.join(incDir, 'inc.php'), genericPHPContent('inc.php'));
+
+    const incSubDirs = ['fields', 'libs', 'components', 'plugins'];
+    incSubDirs.forEach(dir => {
+      const dirPath = path.join(incDir, dir);
+      fs.mkdirSync(dirPath);
+      createFile(path.join(dirPath, 'index.php'), indexContent);
+
+      if (dir === 'fields') {
+        createFile(path.join(dirPath, 'theme-options.php'), themeOptionsContent);
+      } else if (dir === 'fields') {
+        createFile(path.join(dirPath, 'fields.php'), genericPHPContent('fields.php'));
+      } else if (dir === 'libs') {
+        createFile(path.join(dirPath, 'libs.php'), genericPHPContent('libs.php'));
+      } else if (dir === 'components') {
+        createFile(path.join(dirPath, 'components.php'), genericPHPContent('components.php'));
+      } else if (dir === 'plugins') {
+        createFile(path.join(dirPath, 'plugins.php'), genericPHPContent('plugins.php'));
+      }
+    });
+
+
+    // Membuat direktori template-parts dan sub-direktorinya
+    const templatePartsDir = path.join(rootPath, 'template-parts');
+    fs.mkdirSync(templatePartsDir);
+    createFile(path.join(templatePartsDir, 'template-parts.php'), templatePartsContent);
+    createFile(path.join(templatePartsDir, 'index.php'), indexContent);
+
+    const templatePartsSubDirs = ['header', 'sections', 'footer', 'menus', 'single', 'archives'];
+    templatePartsSubDirs.forEach(dir => {
+      const dirPath = path.join(templatePartsDir, dir);
+      fs.mkdirSync(dirPath);
+      createFile(path.join(dirPath, 'index.php'), indexContent);
+
+      if (dir === 'header') {
+        createFile(path.join(dirPath, 'header-template.php'), genericPHPContent('header-template.php'));
+      } else if (dir === 'sections') {
+        ['about-sections.php', 'services-section.php', 'counter-section.php', 'testimonials-section.php', 'pricing-section.php', 'faq-section.php', 'cta-section.php'].forEach(file => {
+          createFile(path.join(dirPath, file), genericPHPContent(file));
+        });
+      } else if (dir === 'footer') {
+        createFile(path.join(dirPath, 'footer-template.php'), genericPHPContent('footer-template.php'));
+      } else if (dir === 'menus') {
+        createFile(path.join(dirPath, 'menus.php'), menusContent);
+      } else if (dir === 'single') {
+        ['single-template.php', 'page-template.php'].forEach(file => {
+          createFile(path.join(dirPath, file), genericPHPContent(file));
+        });
+      } else if (dir === 'archives') {
+        createFile(path.join(dirPath, 'archives-template.php'), genericPHPContent('archives-template.php'));
+      }
+    });
+
+
+
+
+    // create dir end above this line.
+
+    vscode.window.showInformationMessage('Struktur tema WP berhasil di-generate.');
+  });
+
+  context.subscriptions.push(disposable);
 }
 
 export function deactivate() { }

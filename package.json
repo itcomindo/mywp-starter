@@ -8,7 +8,7 @@
   },
   "icon": "assets/icon.png",
   "publisher": "Budi Haryono",
-  "version": "8.0.0",
+  "version": "9.0.2",
   "engines": {
     "vscode": "^1.60.0"
   },
