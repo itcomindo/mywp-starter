@@ -371,8 +371,64 @@ defined('ABSPATH') || exit;
 get_header();
 get_template_part('template-parts/archives/archives-template');
 get_footer();`;
+        const frontPageContent = `<?php
+/**
+ * Frontpage
+ *
+ * @package MasmonsTheme
+ * @author Budi Haryono <mail.budiharyono@gmail.com>
+ * @since 1.0.0
+ */
+defined('ABSPATH') || exit;
+
+get_header();
+get_template_part('template-parts/single/front-page-template');
+get_footer();`;
+        const homeContent = `<?php
+/**
+ * Home
+ *
+ * @package MasmonsTheme
+ * @author Budi Haryono <mail.budiharyono@gmail.com>
+ * @since 1.0.0
+ */
+defined('ABSPATH') || exit;
+
+get_header();
+get_template_part('template-parts/single/front-page-template');
+get_footer();`;
+        const themeOptionsContent = `<?php
+
+/**
+ * File theme-options.php
+ *
+ * @package MasmonsTheme
+ * @author Budi Haryono <mail.budiharyono@gmail.com>
+ * @since 1.0.0
+ */
+defined('ABSPATH') || exit;
+
+use Carbon_Fields\Container;
+use Carbon_Fields\Field;
+
+/**
+ * Function Theme Options
+ *
+ * @package MasmonsTheme
+ * @author Budi Haryono <mail.budiharyono@gmail.com>
+ * @since 019
+ */
+function mm_theme_options()
+{
+    Container::make('theme_options', 'Theme Options')
+        ->fields([
+            Field::make('text', 'starter', 'Start Ganti ini Yak')
+        ]);
+}
+add_action('carbon_fields_register_fields', 'mm_theme_options');
+`;
         // Membuat direktori dan file utama
-        const mainFiles = ['index.php', 'functions.php', 'style.css', '404.php', 'archive.php', 'comments.php', 'page.php', 'single.php', 'header.php', 'footer.php', 'search.php', 'screenshot.png'];
+        const mainFiles = ['index.php', 'functions.php', 'home.php', 'front-page.php', 'style.css', '404.php', 'archive.php', 'comments.php', 'page.php', 'single.php', 'header.php', 'footer.php', 'search.php', 'screenshot.png'];
         mainFiles.forEach(file => {
             if (file.endsWith('.php')) {
                 if (file === 'index.php') {
@@ -401,6 +457,12 @@ get_footer();`;
                 }
                 else if (file === '404.php') {
                     createFile(path.join(rootPath, file), page404Content);
+                }
+                else if (file === 'front-page.php') {
+                    createFile(path.join(rootPath, file), frontPageContent);
+                }
+                else if (file === 'home.php') {
+                    createFile(path.join(rootPath, file), homeContent);
                 }
                 else {
                     createFile(path.join(rootPath, file), genericPHPContent(file));
@@ -446,7 +508,7 @@ get_footer();`;
             fs.mkdirSync(dirPath);
             createFile(path.join(dirPath, 'index.php'), indexContent);
             if (dir === 'fields') {
-                createFile(path.join(dirPath, 'theme-options.php'), genericPHPContent('theme-options.php'));
+                createFile(path.join(dirPath, 'theme-options.php'), themeOptionsContent);
             }
             else if (dir === 'libs') {
                 createFile(path.join(dirPath, 'libs.php'), genericPHPContent('libs.php'));
