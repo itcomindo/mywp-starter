@@ -728,6 +728,7 @@ require_once get_template_directory() . '/template-parts/menus/menus.php';
     });
 
     // Membuat direktori assets dan sub-direktorinya
+
     const assetsDir = path.join(rootPath, 'assets');
     fs.mkdirSync(assetsDir);
     // createFile(path.join(assetsDir, 'assets.php'), genericPHPContent('assets.php'));
@@ -752,6 +753,7 @@ require_once get_template_directory() . '/template-parts/menus/menus.php';
     });
 
     // Membuat direktori inc dan sub-direktorinya
+
     const incDir = path.join(rootPath, 'inc');
     fs.mkdirSync(incDir);
     createFile(path.join(incDir, 'index.php'), indexContent);
@@ -778,6 +780,7 @@ require_once get_template_directory() . '/template-parts/menus/menus.php';
 
 
     // Membuat direktori template-parts dan sub-direktorinya
+
     const templatePartsDir = path.join(rootPath, 'template-parts');
     fs.mkdirSync(templatePartsDir);
     createFile(path.join(templatePartsDir, 'template-parts.php'), templatePartsContent);
@@ -792,7 +795,7 @@ require_once get_template_directory() . '/template-parts/menus/menus.php';
       if (dir === 'header') {
         createFile(path.join(dirPath, 'header-template.php'), genericPHPContent('header-template.php'));
       } else if (dir === 'sections') {
-        ['about-sections.php', 'services-section.php', 'counter-section.php', 'testimonials-section.php', 'pricing-section.php', 'faq-section.php', 'cta-section.php'].forEach(file => {
+        ['about-sections.php', 'services-section.php', 'counter-section.php', 'testimonials-section.php', 'pricing-section.php', 'faq-section.php', 'cta-section.php', 'hero-section.php'].forEach(file => {
           createFile(path.join(dirPath, file), genericPHPContent(file));
         });
       } else if (dir === 'footer') {
@@ -800,7 +803,7 @@ require_once get_template_directory() . '/template-parts/menus/menus.php';
       } else if (dir === 'menus') {
         createFile(path.join(dirPath, 'menus.php'), menusContent);
       } else if (dir === 'single') {
-        ['single-template.php', 'page-template.php'].forEach(file => {
+        ['single-template.php', 'page-template.php', 'front-page-template.php'].forEach(file => {
           createFile(path.join(dirPath, file), genericPHPContent(file));
         });
       } else if (dir === 'archives') {
